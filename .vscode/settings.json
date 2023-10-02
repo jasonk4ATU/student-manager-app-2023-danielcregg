@@ -1,5 +1,5 @@
 {
-    "java.dependency.packagePresentation": "hierarchical",
+    "java.dependency.packagePresentation": "flat",
     "editor.inlayHints.enabled": "off",
     "files.exclude": {
         "**/.devcontainer": true,
