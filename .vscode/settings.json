@@ -10,5 +10,7 @@
     "workbench.colorCustomizations": {
         "tree.indentGuidesStroke": "#05ef3c"
     },
+    "workbench.colorTheme": "Default Dark+",
+    "editor.fontSize": 18,
     "editor.minimap.enabled": false
 }
