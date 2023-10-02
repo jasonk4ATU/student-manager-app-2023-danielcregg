@@ -12,5 +12,6 @@
     },
     "workbench.colorTheme": "Default Dark+",
     "editor.fontSize": 18,
+    "terminal.integrated.fontSize": 18,
     "editor.minimap.enabled": false
 }
