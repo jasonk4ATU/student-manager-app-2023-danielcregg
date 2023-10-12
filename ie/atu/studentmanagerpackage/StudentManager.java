@@ -58,7 +58,7 @@ public class StudentManager {
         while (studentListIterator.hasNext()) {
             Student student = studentListIterator.next();
             printStudent(student);
-        }
-    }
+        } // End of while loop
+    } // End of method
 
-}
+} // End of class
