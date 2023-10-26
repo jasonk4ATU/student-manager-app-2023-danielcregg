@@ -3,13 +3,13 @@ package ie.atu.studentmanagerpackage;
 public class Student {
     // Instance variabes
     private String studentId;
-    private String name;
+    private String firstName;
     private int age;
 
     // Constructor
     public Student(String studentId, String name, int age) {
         this.studentId = studentId;
-        this.name = name;
+        this.firstName = name;
         this.age = age;
     }
 
@@ -18,8 +18,8 @@ public class Student {
         return this.studentId;
     }
 
-    public String getName() {
-        return this.name;
+    public String getFirstName() {
+        return this.firstName;
     }
 
     public int getAge() {
@@ -31,8 +31,8 @@ public class Student {
         this.studentId = studentId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = name;
     }
 
     public void setAge(int age) {
