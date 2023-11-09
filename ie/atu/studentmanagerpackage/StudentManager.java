@@ -2,7 +2,6 @@ package ie.atu.studentmanagerpackage;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -111,5 +110,27 @@ public class StudentManager {
 			} // End catch
 		} // End finally
 	} // End read method
+
+    public void readStudentDataFromCSVFile2(String pathToStudentCSVFile) {
+		// Use try-with-resources to void the need to close the streams in a finally
+		try (BufferedReader bufferedStudentCSVFileReader = new BufferedReader(new FileReader(pathToStudentCSVFile))) {
+			// Read first line of file and discard it. It contains column headers.
+			bufferedStudentCSVFileReader.readLine();
+			String bufferData; // Variable to store each line of data read from file
+			// Read each line of data from file and add it to the studentList
+			while ((bufferData = bufferedStudentCSVFileReader.readLine()) != null) {
+				String[] studentFieldValues = bufferData.split(",");
+				String studentId = studentFieldValues[0];
+				String firstName = studentFieldValues[1];
+				int age = Integer.parseInt(studentFieldValues[2]);
+				addStudent(new Student(studentId, firstName, age)); // Add student to studentList
+			}
+			System.out.println("Student data read from CSV file located at " + pathToStudentCSVFile);
+		} catch (IOException e) {
+			System.err.println(
+					"ERROR: An error occurred while reading the student data from the file: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 
 } // End of class
