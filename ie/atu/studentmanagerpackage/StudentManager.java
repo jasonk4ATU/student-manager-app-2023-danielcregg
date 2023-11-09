@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.stream.Collectors;
 
 public class StudentManager {
 
@@ -27,6 +28,14 @@ public class StudentManager {
     public int findTotalStudents() {
         return studentArrayList.size();
     }
+
+	// Filter the list of students by age
+	public List<Student> getStudentsByAge(int age) {
+		// Use Java 8 Streams to filter the list of students by age
+		return studentArrayList.stream()
+			.filter(student -> student.getAge() == age)
+			.collect(Collectors.toList());
+	}
 
     // Search for a student by studentId using ListIterator
     public Student findStudentById(String studentId) {
