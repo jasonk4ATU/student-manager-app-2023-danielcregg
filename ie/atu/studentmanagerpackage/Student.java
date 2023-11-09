@@ -38,4 +38,9 @@ public class Student {
     public void setAge(int age) {
         this.age = age;
     }
+    
+    // To string method
+    public String toString() {
+        return "Student ID: " + this.studentId + ", Name: " + this.firstName + ", Age: " + this.age;
+    }
 }
