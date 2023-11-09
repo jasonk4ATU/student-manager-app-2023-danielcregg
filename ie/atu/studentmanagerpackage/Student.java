@@ -39,7 +39,8 @@ public class Student {
         this.age = age;
     }
     
-    // To string method
+    // toString -  returns a String representation of the object
+    @Override
     public String toString() {
         return "Student ID: " + this.studentId + ", Name: " + this.firstName + ", Age: " + this.age;
     }
