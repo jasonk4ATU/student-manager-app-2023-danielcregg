@@ -37,6 +37,15 @@ public class StudentManager {
 			.collect(Collectors.toList());
 	}
 
+	// Filter the list of students by a first name
+	public void findStudentsByName(String firstName) {
+		System.out.println("Here are all students with first name " + firstName + ":");
+		// Use Java 8 Streams to filter the list of students by first name
+		studentArrayList.stream()
+			.filter(student -> student.getFirstName().equals(firstName))
+			.forEach(student -> System.out.println(student.toString()));
+	}
+
     // Search for a student by studentId using ListIterator
     public Student findStudentById(String studentId) {
         // Create a ListIterator to iterate through the arrayList
