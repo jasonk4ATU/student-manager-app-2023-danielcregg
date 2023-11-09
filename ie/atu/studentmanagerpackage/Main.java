@@ -12,6 +12,10 @@ public class Main {
         studentManager.printAllStudents();
         // Find a student by age
         System.out.println("Students with age 20:");
+        // use a for loop to iterate through the list of students with age 20
+        // for (Student student : studentManager.getStudentsByAge(20)) {
+        //     System.out.println(student.toString());
+        // }
         studentManager.getStudentsByAge(20).forEach(student -> System.out.println(student.toString()));
         // Find a student by first name
         studentManager.findStudentsByName("Pat");
