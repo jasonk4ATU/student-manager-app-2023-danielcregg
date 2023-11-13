@@ -110,14 +110,12 @@ public class StudentManager implements Serializable {
 	}
 
 	// Method to serialize the Student Manager Object
-	public void writeStudentManagerObjectToFile(String pathToFile) {
+	public void writeToFile(String pathToFile) {
 		// Use try-with-resources to void the need to close the streams in a finally
-		// block.
-		try (FileOutputStream fileOutputStreamToStudentManagerObjectFile = new FileOutputStream(pathToFile);
-				ObjectOutputStream objectOutputStreamToStudentManagerObjectFile = new ObjectOutputStream(
-						fileOutputStreamToStudentManagerObjectFile)) {
+		try (FileOutputStream fos = new FileOutputStream(pathToFile);
+				ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 			// Write the StudentManager object to file
-			objectOutputStreamToStudentManagerObjectFile.writeObject(this);
+			oos.writeObject(this);
 			System.out.println("StudentManager object written to file located at " + pathToFile);
 		} catch (Exception e) {
 			System.out.println("ERROR: An error occurred while writing the StudentManager object to file!");
@@ -126,16 +124,13 @@ public class StudentManager implements Serializable {
 	}
 
 	// Method to de-serialize the Student Manager Object
-	public StudentManager readStudentManagerObjectFromFile(String pathToFile) {
+	public StudentManager readFromFile(String pathToFile) {
 		StudentManager studentManagerObject = null;
-
 		// Use try-with-resources to void the need to close the streams in a finally
-		// block.
-		try (FileInputStream fileInputStreamFromStudentManagerObjectFile = new FileInputStream(pathToFile);
-				ObjectInputStream objectInputStreamfromStudentManagerObjectFile = new ObjectInputStream(
-						fileInputStreamFromStudentManagerObjectFile)) {
+		try (FileInputStream fis = new FileInputStream(pathToFile);
+				ObjectInputStream ois = new ObjectInputStream(fis)) {
 			// Read in object from file
-			studentManagerObject = (StudentManager) objectInputStreamfromStudentManagerObjectFile.readObject();
+			studentManagerObject = (StudentManager) ois.readObject();
 		} catch (Exception e) {
 			System.out.println("ERROR: An error occurred while reading the StudentManager object from file!");
 			e.printStackTrace();

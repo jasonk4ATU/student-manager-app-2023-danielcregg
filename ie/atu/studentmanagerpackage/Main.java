@@ -5,7 +5,9 @@ public class Main {
         // Create a StudentManager object
         StudentManager studentManager = new StudentManager();
         // Read student data from a csv file and add to the StudentManager object arrayList
-        studentManager.readStudentDataFromCSVFile("./resources/students.csv");
+        //studentManager.readStudentDataFromCSVFile("./resources/students.csv");
+        // Read student data from a serialized file and add to the StudentManager object arrayList
+        studentManager = studentManager.readFromFile("./resources/students.ser");
         // Find total number of students in the StudentManager object arrayList
         System.out.println("Total number of students: " + studentManager.findTotalStudents());
         // Print all students in the StudentManager object arrayList
@@ -19,6 +21,6 @@ public class Main {
         studentManager.getStudentsByAge(20).forEach(student -> System.out.println(student.toString()));
         // Find a student by first name
         studentManager.findStudentsByName("Pat");
-        
+        studentManager.writeToFile("./resources/students.ser");     
     }
 }
