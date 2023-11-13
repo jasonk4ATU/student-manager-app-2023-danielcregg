@@ -1,6 +1,8 @@
 package ie.atu.studentmanagerpackage;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable {
     // Instance variabes
     private String studentId;
     private String firstName;
