@@ -14,7 +14,7 @@ public class Main {
         studentManager.printAllStudents();
         // Find a student by age
         System.out.println("Students with age 20:");
-        // use a for loop to iterate through the list of students with age 20
+        // Use a for loop to iterate through the list of students with age 20
         // for (Student student : studentManager.getStudentsByAge(20)) {
         //     System.out.println(student.toString());
         // }
