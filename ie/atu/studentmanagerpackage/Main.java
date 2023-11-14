@@ -1,5 +1,7 @@
 package ie.atu.studentmanagerpackage;
 
+import java.util.Optional;
+
 public class Main {
     public static void main(String[] args) {
         // Create a StudentManager object
@@ -22,5 +24,14 @@ public class Main {
         // Find a student by first name
         studentManager.findStudentsByName("Pat");
         studentManager.writeToFile("./resources/students.ser");     
-    }
-}
+        
+        // Search for a student by studentId and print the student details
+        Optional<Student> student = studentManager.findStudentById("G00111111");
+        if (student.isPresent()) {
+            System.out.println("Student with id G00111111: " + student.get().toString());
+        } else {
+            System.out.println("Student with id G00111111 not found");
+        }
+
+    } // End of main method
+} // End of Main class

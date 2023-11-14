@@ -10,10 +10,14 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.io.Serializable;
 
 public class StudentManager implements Serializable {
+
+	// Create a serialVersionUID for serialization
+	private static final long serialVersionUID = 2L;
 
 	// Create an arrayList to hold Student objects
 	List<Student> studentArrayList = new ArrayList<Student>();
@@ -51,7 +55,7 @@ public class StudentManager implements Serializable {
 	}
 
 	// Search for a student by studentId using ListIterator
-	public Student findStudentById(String studentId) {
+	public Student findStudentByIdWithIterator(String studentId) {
 		// Create a ListIterator to iterate through the arrayList
 		ListIterator<Student> studentListIterator = studentArrayList.listIterator();
 		// Iterate through the student arrayList
@@ -64,6 +68,20 @@ public class StudentManager implements Serializable {
 		}
 		// If no student is found with studentId passed in, return null
 		return null;
+	}
+
+	// Search for a student by studentId
+	public Optional<Student> findStudentById(String studentId) {
+		// Iterate through the student arrayList
+		for (Student student : studentArrayList) {
+			// If the studentId matches the studentId passed 
+			// then return the student
+			if (student.getStudentId().equals(studentId)) {
+				return Optional.of(student);
+			}
+		}
+		// If no student is found with studentId passed in, return Optional.empty
+		return Optional.empty();
 	}
 
 	// Print instance variables of a given student object

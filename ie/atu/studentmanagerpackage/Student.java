@@ -3,6 +3,10 @@ package ie.atu.studentmanagerpackage;
 import java.io.Serializable;
 
 public class Student implements Serializable {
+
+    // Create a serialVersionUID for serialization
+    private static final long serialVersionUID = 1L;
+
     // Instance variabes
     private String studentId;
     private String firstName;
