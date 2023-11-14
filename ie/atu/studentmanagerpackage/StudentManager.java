@@ -1,9 +1,11 @@
 package ie.atu.studentmanagerpackage;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -74,7 +76,7 @@ public class StudentManager implements Serializable {
 	public Optional<Student> findStudentById(String studentId) {
 		// Iterate through the student arrayList
 		for (Student student : studentArrayList) {
-			// If the studentId matches the studentId passed 
+			// If the studentId matches the studentId passed
 			// then return the student
 			if (student.getStudentId().equals(studentId)) {
 				return Optional.of(student);
@@ -92,6 +94,30 @@ public class StudentManager implements Serializable {
 				.forEach(student -> System.out.println(student.toString()));
 	}
 
+	// Method to write student data to a CSV file
+	public void writeStudentDataToCSVFile(String pathToStudentCSVFile) {
+		// Create a buffered writer to write to the CSV file
+		try (BufferedWriter bufferedStudentCSVFileWriter = new BufferedWriter(
+				new FileWriter(pathToStudentCSVFile))) {
+			// Write column headers to file
+			bufferedStudentCSVFileWriter.write("studentId,firstName,age");
+			bufferedStudentCSVFileWriter.newLine();
+			// Iterate through the student arrayList
+			for (Student student : studentArrayList) {
+				// Write student data to file
+				bufferedStudentCSVFileWriter.write(student.getStudentId() + "," + student.getFirstName() + ","
+						+ student.getAge());
+				bufferedStudentCSVFileWriter.newLine();
+			}
+			System.out.println("Student data written to CSV file located at " + pathToStudentCSVFile);
+		} catch (IOException e) {
+			System.err.println(
+					"ERROR: An error occurred while writing the student data to the file: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	// Method to read student data from a CSV file
 	public void readStudentDataFromCSVFile(String pathToStudentCSVFile) {
 		// Use try-with-resources to void the need to close the streams in a finally
 		try (BufferedReader bufferedStudentCSVFileReader = new BufferedReader(new FileReader(pathToStudentCSVFile))) {

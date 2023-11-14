@@ -32,6 +32,9 @@ public class Main {
         } else {
             System.out.println("Student with id G00111111 not found");
         }
+        
+        // Write student data to a csv file
+        studentManager.writeStudentDataToCSVFile("./resources/students.csv");
 
     } // End of main method
 } // End of Main class
