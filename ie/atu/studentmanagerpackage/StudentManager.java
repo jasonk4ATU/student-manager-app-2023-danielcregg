@@ -84,26 +84,13 @@ public class StudentManager implements Serializable {
 		return Optional.empty();
 	}
 
-	// Print instance variables of a given student object
-	public void printStudent(Student student) {
-		if (student == null) {
-			System.out.println("Student does not exist!");
-		} else {
-			System.out.println("Student ID: " + student.getStudentId() + ", Student Name: " + student.getFirstName()
-					+ ", Student Age: " + student.getAge());
-		}
-	}
-
 	// Print all students in the arrayList
 	public void printAllStudents() {
-		// Create a ListIterator to iterate through the arrayList
-		ListIterator<Student> studentListIterator = studentArrayList.listIterator();
-		// Iterate through the student arrayList
-		while (studentListIterator.hasNext()) {
-			Student student = studentListIterator.next();
-			printStudent(student);
-		} // End of while loop
-	} // End of method
+		System.out.println("Here are all the students:");
+		// Use Java 8 Streams to print all students in the arrayList
+		studentArrayList.stream()
+				.forEach(student -> System.out.println(student.toString()));
+	}
 
 	public void readStudentDataFromCSVFile(String pathToStudentCSVFile) {
 		// Use try-with-resources to void the need to close the streams in a finally
