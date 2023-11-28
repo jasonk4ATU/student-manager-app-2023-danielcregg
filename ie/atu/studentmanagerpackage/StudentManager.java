@@ -22,7 +22,20 @@ public class StudentManager implements Serializable {
 	private static final long serialVersionUID = 2L;
 
 	// Create an arrayList to hold Student objects
-	List<Student> studentArrayList = new ArrayList<Student>();
+	private List<Student> studentArrayList = new ArrayList<Student>();
+
+	// Constructor
+	public StudentManager() {
+	}
+
+	// Getters and Setters
+	public List<Student> getStudentArrayList() {
+		return studentArrayList;
+	}
+
+	public void setStudentArrayList(List<Student> studentArrayList) {
+		this.studentArrayList = studentArrayList;
+	}
 
 	// Add a student to the arrayList
 	public void addStudent(Student student) {
@@ -32,6 +45,38 @@ public class StudentManager implements Serializable {
 	// Remove a student from the arrayList
 	public void removeStudent(Student student) {
 		studentArrayList.remove(student);
+	}
+
+	// Add student to list
+	public boolean addStudentToList(String studentId, String name, int age) {
+		// Check student details are vaild and if student is NOT already on list
+		if (Student.isValid(studentId, name, age) && !isOnList(studentId)) {
+			// Create student object with valid details and add student to the list
+			Student newStudent = new Student(studentId, name, age);
+			return this.studentArrayList.add(newStudent);
+		}
+		// If student details are invalid or if student is already on list return false
+		System.out.println("Student with ID " + studentId + " could not be added to list!");
+		return false;
+	}
+
+	// Returns true if student on list
+	public boolean isOnList(String studentId) {
+		return studentArrayList.contains(findStudentObjectByID(studentId));
+	}
+
+	// Finf student object by ID
+	public Student findStudentObjectByID(String studentId) {
+		// Iterate through the student arrayList
+		for (Student student : studentArrayList) {
+			// If the studentId matches the studentId passed
+			// then return the student
+			if (student.getStudentId().equals(studentId)) {
+				return student;
+			}
+		}
+		// If no student is found with studentId passed in, return null
+		return null;
 	}
 
 	// Find the total number of students in the arrayList
@@ -84,6 +129,11 @@ public class StudentManager implements Serializable {
 		}
 		// If no student is found with studentId passed in, return Optional.empty
 		return Optional.empty();
+	}
+
+	// Remove student from list given studendID
+	public boolean removeStudentFromList(String studentId) {
+		return studentArrayList.remove(findStudentObjectByID(studentId));
 	}
 
 	// Print all students in the arrayList

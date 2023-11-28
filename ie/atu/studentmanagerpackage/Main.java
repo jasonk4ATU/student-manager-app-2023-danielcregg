@@ -1,40 +1,142 @@
 package ie.atu.studentmanagerpackage;
 
-import java.util.Optional;
+import java.io.File;
+import java.util.stream.Collectors;
 
-public class Main {
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+    StudentManager sm = new StudentManager(); // Used for managing students
+
+    @Override
+    public void start(Stage primaryStage) {
+
+        // Create a GridPane to hold the GUI nodes
+        GridPane gridPane1 = new GridPane(); // Create gridpane node to use as root node of scene
+
+        // Create child nodes
+
+        // Create Text node for label at top of scene 1
+        Text txtHeader = new Text("Please select an option below:");
+
+        // Add Student Button and 3 text fields for entering student details
+        Button btnAddStudent = new Button("Add Student");
+        TextField tfStudentID = new TextField();
+        tfStudentID.setPromptText("Student ID");
+        TextField tfStudentFirstName = new TextField();
+        tfStudentFirstName.setPromptText("First Name");
+        TextField tfStudentAge = new TextField();
+        tfStudentAge.setPromptText("Age");
+
+        // Create a button and text field to take a Student ID for deleting a student
+        // from the list
+        Button btnRemoveStudent = new Button("Remove Student");
+        TextField tfDelStudent = new TextField();
+        tfDelStudent.setPromptText("Student ID");
+
+        // Show total number of students
+        Button btnShowTotal = new Button("Show Total Students");
+
+        // Create a Quit button
+        Button btnQuit = new Button("Quit");
+
+        // Create TextArea node for bottom of scene 1 to display output
+        TextArea taMyOutput = new TextArea();
+
+        // Adding and arranging all the nodes in the grid - add(node, column, row)
+        gridPane1.add(txtHeader, 0, 0);
+        gridPane1.add(btnAddStudent, 0, 2);
+        gridPane1.add(tfStudentID, 1, 2);
+        gridPane1.add(tfStudentFirstName, 2, 2);
+        gridPane1.add(tfStudentAge, 4, 2);
+        gridPane1.add(btnRemoveStudent, 0, 3);
+        gridPane1.add(tfDelStudent, 1, 3);
+        gridPane1.add(btnShowTotal, 0, 4);
+        gridPane1.add(btnQuit, 0, 7);
+        gridPane1.add(taMyOutput, 0, 8, 5, 1);
+
+        // Add Student button action
+        btnAddStudent.setOnAction(e -> {
+            // If any of the Student fields are empty print prompt message
+            try {
+                if (Student.isValid(tfStudentID.getText(), tfStudentFirstName.getText(),
+                        Integer.parseInt(tfStudentAge.getText())) == false) {
+                    taMyOutput.setText("Please enter valid Student details\n");
+                } else {
+                    // Create new Student with information in text fields
+                    // Add student to student list
+                    if (sm.addStudentToList(tfStudentID.getText(), tfStudentFirstName.getText(),
+                            Integer.parseInt(tfStudentAge.getText()))) {
+                        taMyOutput.setText("Student added to list successfully\n");
+                    } else {
+                        taMyOutput.setText("Student not added to list\n");
+                    }
+                    // Clear input fields for next student
+                    tfStudentID.clear();
+                    tfStudentFirstName.clear();
+                    tfStudentAge.clear();
+                }
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+                taMyOutput.setText("Please enter a number for Age");
+            }
+        });
+
+        // Remove Student button action
+        btnRemoveStudent.setOnAction(e -> {
+
+            if (tfDelStudent.getText().trim().equals("")) { // If text field is empty
+                taMyOutput.setText("Please enter the Student Number you want to remove");
+            } else {
+                boolean status;
+                status = sm.removeStudentFromList(tfDelStudent.getText());
+                if (status == true) {
+                    taMyOutput.setText(tfDelStudent.getText() + " has been removed from the student list!");
+                    tfDelStudent.clear();
+                } else {
+                    taMyOutput.setText("Student " + tfDelStudent.getText() + " not found\n");
+                    taMyOutput.appendText("No student removed!");
+                    tfDelStudent.clear();
+                }
+            }
+
+        });
+
+        // Show total number of students
+        btnShowTotal.setOnAction(e -> {
+            taMyOutput.setText("Current Total Students: " + sm.getStudentArrayList().size());
+        });
+
+        // Quit button action
+        btnQuit.setOnAction(e -> Platform.exit());
+
+
+        // ==== All nodes now added to the scene and actions configured ====
+
+        // Create scene and add the root node i.e. the gridpane
+        Scene scene1 = new Scene(gridPane1, 600, 450);
+        // Preparing the Stage (i.e. the container of any JavaFX application)
+        // Set Stage TitleUse Java 8 Streams: When checking if the student list is empty
+        // and iterating over it, you can use Java 8 streams for more readable and
+        // efficient code.
+        primaryStage.setTitle("Student Manager Application");
+        // Setting the scene on which this stage will show
+        primaryStage.setScene(scene1);
+        // Display the stage
+        primaryStage.show();
+    }
+
     public static void main(String[] args) {
-        // Create a StudentManager object
-        StudentManager studentManager = new StudentManager();
-        // Read student data from a csv file and add to the StudentManager object arrayList
-        //studentManager.readStudentDataFromCSVFile("./resources/students.csv");
-        // Read student data from a serialized file and add to the StudentManager object arrayList
-        studentManager = studentManager.readFromFile("./resources/students.ser");
-        // Find total number of students in the StudentManager object arrayList
-        System.out.println("Total number of students: " + studentManager.findTotalStudents());
-        // Print all students in the StudentManager object arrayList
-        studentManager.printAllStudents();
-        // Find a student by age
-        System.out.println("Students with age 20:");
-        // Use a for loop to iterate through the list of students with age 20
-        // for (Student student : studentManager.getStudentsByAge(20)) {
-        //     System.out.println(student.toString());
-        // }
-        studentManager.getStudentsByAge(20).forEach(student -> System.out.println(student.toString()));
-        // Find a student by first name
-        studentManager.findStudentsByName("Pat");
-        studentManager.writeToFile("./resources/students.ser");     
-        
-        // Search for a student by studentId and print the student details
-        Optional<Student> student = studentManager.findStudentById("G00111111");
-        if (student.isPresent()) {
-            System.out.println("Student with id G00111111: " + student.get().toString());
-        } else {
-            System.out.println("Student with id G00111111 not found");
-        }
-        
-        // Write student data to a csv file
-        studentManager.writeStudentDataToCSVFile("./resources/students.csv");
+        launch(args);
+    }
 
-    } // End of main method
-} // End of Main class
+}
