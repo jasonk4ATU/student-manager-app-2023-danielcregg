@@ -22,10 +22,11 @@ public class StudentManager implements Serializable {
 	private static final long serialVersionUID = 2L;
 
 	// Create an arrayList to hold Student objects
-	private List<Student> studentArrayList = new ArrayList<Student>();
+	private List<Student> studentArrayList;
 
 	// Constructor
 	public StudentManager() {
+		studentArrayList = new ArrayList<Student>();
 	}
 
 	// Getters and Setters
