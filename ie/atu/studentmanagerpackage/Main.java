@@ -45,86 +45,86 @@ public class Main extends Application {
         Button btnShowTotal = new Button("Show Total Students");
 
         // Create a Quit button
-        Button btnQuit = new Button("Quit");
+        Button btnQuit = new Button("Exit");
 
         // Create TextArea node for bottom of scene 1 to display output
         TextArea taMyOutput = new TextArea();
 
         // Adding and arranging all the nodes in the grid - add(node, column, row)
-        gridPane1.add(txtHeader, 0, 0);
-        gridPane1.add(btnAddStudent, 0, 2);
-        gridPane1.add(tfStudentID, 1, 2);
-        gridPane1.add(tfStudentFirstName, 2, 2);
-        gridPane1.add(tfStudentAge, 4, 2);
-        gridPane1.add(btnRemoveStudent, 0, 3);
-        gridPane1.add(tfDelStudent, 1, 3);
-        gridPane1.add(btnShowTotal, 0, 4);
-        gridPane1.add(btnQuit, 0, 7);
-        gridPane1.add(taMyOutput, 0, 8, 5, 1);
+        gridPane1.add(txtHeader, 0, 0); // column 0, row 0
+        gridPane1.add(btnAddStudent, 0, 1); // column 0, row 1
+        gridPane1.add(tfStudentID, 1, 1); // column 1, row 1
+        gridPane1.add(tfStudentFirstName, 2, 1);
+        gridPane1.add(tfStudentAge, 4, 1);
+        gridPane1.add(btnRemoveStudent, 0, 2);
+        gridPane1.add(tfDelStudent, 1, 2);
+        gridPane1.add(btnShowTotal, 0, 3);
+        gridPane1.add(btnQuit, 0, 4);
+        gridPane1.add(taMyOutput, 0, 5, 5, 1); //
 
-        // Add Student button action
-        btnAddStudent.setOnAction(e -> {
-            // If any of the Student fields are empty print prompt message
-            try {
-                if (Student.isValid(tfStudentID.getText(), tfStudentFirstName.getText(),
-                        Integer.parseInt(tfStudentAge.getText())) == false) {
-                    taMyOutput.setText("Please enter valid Student details\n");
-                } else {
-                    // Create new Student with information in text fields
-                    // Add student to student list
-                    if (sm.addStudentToList(tfStudentID.getText(), tfStudentFirstName.getText(),
-                            Integer.parseInt(tfStudentAge.getText()))) {
-                        taMyOutput.setText("Student added to list successfully\n");
-                    } else {
-                        taMyOutput.setText("Student not added to list\n");
-                    }
-                    // Clear input fields for next student
-                    tfStudentID.clear();
-                    tfStudentFirstName.clear();
-                    tfStudentAge.clear();
-                }
-            } catch (NumberFormatException ex) {
-                ex.printStackTrace();
-                taMyOutput.setText("Please enter a number for Age");
-            }
-        });
+        // // Add Student button action
+        // btnAddStudent.setOnAction(e -> {
+        //     // If any of the Student fields are empty print prompt message
+        //     try {
+        //         if (Student.isValid(tfStudentID.getText(), tfStudentFirstName.getText(),
+        //                 Integer.parseInt(tfStudentAge.getText())) == false) {
+        //             taMyOutput.setText("Please enter valid Student details\n");
+        //         } else {
+        //             // Create new Student with information in text fields
+        //             // Add student to student list
+        //             if (sm.addStudentToList(tfStudentID.getText(), tfStudentFirstName.getText(),
+        //                     Integer.parseInt(tfStudentAge.getText()))) {
+        //                 taMyOutput.setText("Student added to list successfully\n");
+        //             } else {
+        //                 taMyOutput.setText("Student not added to list\n");
+        //             }
+        //             // Clear input fields for next student
+        //             tfStudentID.clear();
+        //             tfStudentFirstName.clear();
+        //             tfStudentAge.clear();
+        //         }
+        //     } catch (NumberFormatException ex) {
+        //         ex.printStackTrace();
+        //         taMyOutput.setText("Please enter a number for Age");
+        //     }
+        // });
 
-        // Remove Student button action
-        btnRemoveStudent.setOnAction(e -> {
+        // // Remove Student button action
+        // btnRemoveStudent.setOnAction(e -> {
 
-            if (tfDelStudent.getText().trim().equals("")) { // If text field is empty
-                taMyOutput.setText("Please enter the Student Number you want to remove");
-            } else {
-                boolean status;
-                status = sm.removeStudentFromList(tfDelStudent.getText());
-                if (status == true) {
-                    taMyOutput.setText(tfDelStudent.getText() + " has been removed from the student list!");
-                    tfDelStudent.clear();
-                } else {
-                    taMyOutput.setText("Student " + tfDelStudent.getText() + " not found\n");
-                    taMyOutput.appendText("No student removed!");
-                    tfDelStudent.clear();
-                }
-            }
+        //     if (tfDelStudent.getText().trim().equals("")) { // If text field is empty
+        //         taMyOutput.setText("Please enter the Student Number you want to remove");
+        //     } else {
+        //         boolean status;
+        //         status = sm.removeStudentFromList(tfDelStudent.getText());
+        //         if (status == true) {
+        //             taMyOutput.setText(tfDelStudent.getText() + " has been removed from the student list!");
+        //             tfDelStudent.clear();
+        //         } else {
+        //             taMyOutput.setText("Student " + tfDelStudent.getText() + " not found\n");
+        //             taMyOutput.appendText("No student removed!");
+        //             tfDelStudent.clear();
+        //         }
+        //     }
 
-        });
+        // });
 
         // Show total number of students
         btnShowTotal.setOnAction(e -> {
             taMyOutput.setText("Current Total Students: " + sm.getStudentArrayList().size());
         });
 
-        // Quit button action
+        // Exit button action
         btnQuit.setOnAction(e -> Platform.exit());
 
-
-        // ==== All nodes now added to the scene and actions configured ====
+        // // ==== All nodes now added to the scene and actions configured ====
 
         // Create scene and add the root node i.e. the gridpane
         Scene scene1 = new Scene(gridPane1, 600, 450);
-        primaryStage.setTitle("Student Manager Application");
         // Setting the scene on which this stage will show
         primaryStage.setScene(scene1);
+        // Set the title of this stage (window)
+        primaryStage.setTitle("Student Manager Application");
         // Display the stage
         primaryStage.show();
     }
