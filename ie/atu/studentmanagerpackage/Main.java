@@ -18,6 +18,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        // Create variables to store number of arguments passed and their content
+		int noOfCmdLineArgs = 0; // Used to set stage title
+		String cmdLineArgs = null; // Used to set stage title
+
         // Create a GridPane to hold the GUI nodes
         GridPane gridPane1 = new GridPane(); // Create gridpane node to use as root node of scene
 
@@ -123,10 +127,22 @@ public class Main extends Application {
         Scene scene1 = new Scene(gridPane1, 600, 450);
         // Setting the scene on which this stage will show
         primaryStage.setScene(scene1);
-        // Set the title of this stage (window)
-        primaryStage.setTitle("Student Manager Application");
-        // Display the stage
-        primaryStage.show();
+        // Find number of command line arguments supplied
+		noOfCmdLineArgs = getParameters().getRaw().size();
+		// If command line arguments have been provided then set the title to
+		// them. If none were provided then set title to default value.
+		if (noOfCmdLineArgs > 0) {
+			// Get command line arguments as String
+			cmdLineArgs = getParameters().getRaw().toString();
+			// Remove unwanted characters ([ and ] and ,)from string
+			cmdLineArgs = cmdLineArgs.replaceAll("\\[|\\]|\\,", "");
+			primaryStage.setTitle(cmdLineArgs);
+		} else {
+			// Default value
+			primaryStage.setTitle("Student Manager Application");
+		}
+		// Displaying the stage
+		primaryStage.show();
     }
 
     public static void main(String[] args) {
