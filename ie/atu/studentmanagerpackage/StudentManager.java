@@ -183,7 +183,6 @@ public class StudentManager implements Serializable {
 				int age = Integer.parseInt(studentFieldValues[2]);
 				addStudent(new Student(studentId, firstName, age)); // Add student to studentList
 			}
-			System.out.println("Student data read from CSV file located at " + pathToStudentCSVFile);
 		} catch (IOException e) {
 			System.err.println(
 					"ERROR: An error occurred while reading the student data from the file: " + e.getMessage());

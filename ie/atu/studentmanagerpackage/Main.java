@@ -1,5 +1,6 @@
 package ie.atu.studentmanagerpackage;
 
+import java.util.List;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -19,8 +20,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         // Create variables to store number of arguments passed and their content
-		int noOfCmdLineArgs = 0; // Used to set stage title
-		String cmdLineArgs = null; // Used to set stage title
+        int noOfCmdLineArgs = 0; // Used to set stage title
+        String cmdLineArgs = null; // Used to set stage title
+        Parameters params = getParameters();
+        List<String> args = params.getRaw();
 
         // Create a GridPane to hold the GUI nodes
         GridPane gridPane1 = new GridPane(); // Create gridpane node to use as root node of scene
@@ -68,48 +71,49 @@ public class Main extends Application {
 
         // // Add Student button action
         // btnAddStudent.setOnAction(e -> {
-        //     // If any of the Student fields are empty print prompt message
-        //     try {
-        //         if (Student.isValid(tfStudentID.getText(), tfStudentFirstName.getText(),
-        //                 Integer.parseInt(tfStudentAge.getText())) == false) {
-        //             taMyOutput.setText("Please enter valid Student details\n");
-        //         } else {
-        //             // Create new Student with information in text fields
-        //             // Add student to student list
-        //             if (sm.addStudentToList(tfStudentID.getText(), tfStudentFirstName.getText(),
-        //                     Integer.parseInt(tfStudentAge.getText()))) {
-        //                 taMyOutput.setText("Student added to list successfully\n");
-        //             } else {
-        //                 taMyOutput.setText("Student not added to list\n");
-        //             }
-        //             // Clear input fields for next student
-        //             tfStudentID.clear();
-        //             tfStudentFirstName.clear();
-        //             tfStudentAge.clear();
-        //         }
-        //     } catch (NumberFormatException ex) {
-        //         ex.printStackTrace();
-        //         taMyOutput.setText("Please enter a number for Age");
-        //     }
+        // // If any of the Student fields are empty print prompt message
+        // try {
+        // if (Student.isValid(tfStudentID.getText(), tfStudentFirstName.getText(),
+        // Integer.parseInt(tfStudentAge.getText())) == false) {
+        // taMyOutput.setText("Please enter valid Student details\n");
+        // } else {
+        // // Create new Student with information in text fields
+        // // Add student to student list
+        // if (sm.addStudentToList(tfStudentID.getText(), tfStudentFirstName.getText(),
+        // Integer.parseInt(tfStudentAge.getText()))) {
+        // taMyOutput.setText("Student added to list successfully\n");
+        // } else {
+        // taMyOutput.setText("Student not added to list\n");
+        // }
+        // // Clear input fields for next student
+        // tfStudentID.clear();
+        // tfStudentFirstName.clear();
+        // tfStudentAge.clear();
+        // }
+        // } catch (NumberFormatException ex) {
+        // ex.printStackTrace();
+        // taMyOutput.setText("Please enter a number for Age");
+        // }
         // });
 
         // // Remove Student button action
         // btnRemoveStudent.setOnAction(e -> {
 
-        //     if (tfDelStudent.getText().trim().equals("")) { // If text field is empty
-        //         taMyOutput.setText("Please enter the Student Number you want to remove");
-        //     } else {
-        //         boolean status;
-        //         status = sm.removeStudentFromList(tfDelStudent.getText());
-        //         if (status == true) {
-        //             taMyOutput.setText(tfDelStudent.getText() + " has been removed from the student list!");
-        //             tfDelStudent.clear();
-        //         } else {
-        //             taMyOutput.setText("Student " + tfDelStudent.getText() + " not found\n");
-        //             taMyOutput.appendText("No student removed!");
-        //             tfDelStudent.clear();
-        //         }
-        //     }
+        // if (tfDelStudent.getText().trim().equals("")) { // If text field is empty
+        // taMyOutput.setText("Please enter the Student Number you want to remove");
+        // } else {
+        // boolean status;
+        // status = sm.removeStudentFromList(tfDelStudent.getText());
+        // if (status == true) {
+        // taMyOutput.setText(tfDelStudent.getText() + " has been removed from the
+        // student list!");
+        // tfDelStudent.clear();
+        // } else {
+        // taMyOutput.setText("Student " + tfDelStudent.getText() + " not found\n");
+        // taMyOutput.appendText("No student removed!");
+        // tfDelStudent.clear();
+        // }
+        // }
 
         // });
 
@@ -121,28 +125,42 @@ public class Main extends Application {
         // Exit button action
         btnQuit.setOnAction(e -> Platform.exit());
 
-        // // ==== All nodes now added to the scene and actions configured ====
+        // ==== All nodes now added to the scene and actions configured ====
 
         // Create scene and add the root node i.e. the gridpane
         Scene scene1 = new Scene(gridPane1, 600, 450);
         // Setting the scene on which this stage will show
         primaryStage.setScene(scene1);
-        // Find number of command line arguments supplied
-		noOfCmdLineArgs = getParameters().getRaw().size();
-		// If command line arguments have been provided then set the title to
-		// them. If none were provided then set title to default value.
-		if (noOfCmdLineArgs > 0) {
-			// Get command line arguments as String
-			cmdLineArgs = getParameters().getRaw().toString();
-			// Remove unwanted characters ([ and ] and ,)from string
-			cmdLineArgs = cmdLineArgs.replaceAll("\\[|\\]|\\,", "");
-			primaryStage.setTitle(cmdLineArgs);
-		} else {
-			// Default value
-			primaryStage.setTitle("Student Manager Application");
-		}
-		// Displaying the stage
-		primaryStage.show();
+
+        // Set a default title
+        primaryStage.setTitle("Student Manager Application");
+
+        // Check if -t or -f flag is present
+        for (int i = 0; i < args.size(); i++) {
+            switch (args.get(i)) {
+                // If -t flag is present
+                case "-t":
+                    if (i + 1 < args.size()) {
+                        // Get the title
+                        String title = args.get(i + 1);
+                        // Set the title
+                        primaryStage.setTitle(title);
+                    }
+                    break;
+                // If -f flag is present
+                case "-f":
+                    if (i + 1 < args.size()) {
+                        // Get the CSV file path
+                        String csvFilePath = args.get(i + 1);
+                        // Read students from the CSV file and add them to the studentArrayList
+                        sm.readStudentDataFromCSVFile(csvFilePath);
+                    }
+                    break;
+            }
+        }
+
+        // Displaying the stage
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
