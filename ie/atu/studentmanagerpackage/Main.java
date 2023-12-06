@@ -18,10 +18,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
-        // Create variables to store number of arguments passed and their content
-        int noOfCmdLineArgs = 0; // Used to set stage title
-        String cmdLineArgs = null; // Used to set stage title
+        // Get command line arguments
         Parameters params = getParameters();
         List<String> args = params.getRaw();
 
@@ -135,7 +132,7 @@ public class Main extends Application {
         // Set a default title
         primaryStage.setTitle("Student Manager Application");
 
-        // Check if -t or -f flag is present
+        // Check command line args to see if -t or -f flag is present
         for (int i = 0; i < args.size(); i++) {
             switch (args.get(i)) {
                 // If -t flag is present
