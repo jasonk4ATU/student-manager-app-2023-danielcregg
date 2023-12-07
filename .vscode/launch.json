@@ -16,7 +16,7 @@
             "request": "launch",
             "mainClass": "ie.atu.studentmanagerpackage.Main",
             "projectName": "student-manager-app-2023-danielcregg_5ec7baa9",
-            "args": "-t Title -f ./resources/students.csv"
+            "args": "-t 'Student Manager App' -f ./resources/students.csv"
         }
     ]
 }
