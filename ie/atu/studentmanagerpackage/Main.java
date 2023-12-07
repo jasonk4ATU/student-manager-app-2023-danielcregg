@@ -133,26 +133,21 @@ public class Main extends Application {
         primaryStage.setTitle("Student Manager Application");
 
         // Check command line args to see if -t or -f flag is present
-        for (int i = 0; i < args.size(); i++) {
-            switch (args.get(i)) {
-                // If -t flag is present
-                case "-t":
-                    if (i + 1 < args.size()) {
-                        // Get the title
-                        String title = args.get(i + 1);
-                        // Set the title
-                        primaryStage.setTitle(title);
+        for (int i = 0; i < args.size(); i++) { // Loop through all args	
+            switch (args.get(i)) { // Check which flag is present
+                case "-t": // If -t flag is present
+                    if (i + 1 < args.size()) { // Check if there is another arg after -t
+                        String title = args.get(i + 1); // Get the title
+                        primaryStage.setTitle(title); // Set the title
                     }
-                    break;
-                // If -f flag is present
-                case "-f":
-                    if (i + 1 < args.size()) {
-                        // Get the CSV file path
-                        String csvFilePath = args.get(i + 1);
+                    break; // Break out of the switch statement
+                case "-f": // If -f flag is present
+                    if (i + 1 < args.size()) { // Check if there is another arg after -f
+                        String csvFilePath = args.get(i + 1); // Get the CSV file path
                         // Read students from the CSV file and add them to the studentArrayList
                         sm.readStudentDataFromCSVFile(csvFilePath);
                     }
-                    break;
+                    break; // Break out of the switch statement
             }
         }
 
