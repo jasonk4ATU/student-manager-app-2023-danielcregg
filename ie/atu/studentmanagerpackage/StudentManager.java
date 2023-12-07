@@ -14,7 +14,10 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class StudentManager implements Serializable {
 
@@ -183,6 +186,20 @@ public class StudentManager implements Serializable {
 				int age = Integer.parseInt(studentFieldValues[2]);
 				addStudent(new Student(studentId, firstName, age)); // Add student to studentList
 			}
+		} catch (IOException e) {
+			System.err.println(
+					"ERROR: An error occurred while reading the student data from the file: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	// Method to read student data from a CSV file using nio
+	public void readStudentDataFromCSVFilenio(String pathToStudentCSVFile) {
+		try (Stream<String> lines = Files.lines(Paths.get(pathToStudentCSVFile))) {
+			lines.skip(1) // Skip the header line
+				.map(line -> line.split(","))
+				.map(data -> new Student(data[0], data[1], Integer.parseInt(data[2])))
+				.forEach(this::addStudent);
 		} catch (IOException e) {
 			System.err.println(
 					"ERROR: An error occurred while reading the student data from the file: " + e.getMessage());
