@@ -66,53 +66,52 @@ public class Main extends Application {
         gridPane1.add(btnQuit, 0, 4);
         gridPane1.add(taMyOutput, 0, 5, 5, 1); //
 
-        // // Add Student button action
-        // btnAddStudent.setOnAction(e -> {
-        // // If any of the Student fields are empty print prompt message
-        // try {
-        // if (Student.isValid(tfStudentID.getText(), tfStudentFirstName.getText(),
-        // Integer.parseInt(tfStudentAge.getText())) == false) {
-        // taMyOutput.setText("Please enter valid Student details\n");
-        // } else {
-        // // Create new Student with information in text fields
-        // // Add student to student list
-        // if (sm.addStudentToList(tfStudentID.getText(), tfStudentFirstName.getText(),
-        // Integer.parseInt(tfStudentAge.getText()))) {
-        // taMyOutput.setText("Student added to list successfully\n");
-        // } else {
-        // taMyOutput.setText("Student not added to list\n");
-        // }
-        // // Clear input fields for next student
-        // tfStudentID.clear();
-        // tfStudentFirstName.clear();
-        // tfStudentAge.clear();
-        // }
-        // } catch (NumberFormatException ex) {
-        // ex.printStackTrace();
-        // taMyOutput.setText("Please enter a number for Age");
-        // }
-        // });
+        // Add Student button action
+        btnAddStudent.setOnAction(e -> {
+        // If any of the Student fields are empty print prompt message
+        try {
+        if (Student.isValid(tfStudentID.getText(), tfStudentFirstName.getText(),
+        Integer.parseInt(tfStudentAge.getText())) == false) {
+        taMyOutput.setText("Please enter valid Student details\n");
+        } else {
+        // Create new Student with information in text fields
+        // Add student to student list
+        if (sm.addStudentToList(tfStudentID.getText(), tfStudentFirstName.getText(),
+        Integer.parseInt(tfStudentAge.getText()))) {
+        taMyOutput.setText("Student added to list successfully\n");
+        } else {
+        taMyOutput.setText("Student not added to list\n");
+        }
+        // Clear input fields for next student
+        tfStudentID.clear();
+        tfStudentFirstName.clear();
+        tfStudentAge.clear();
+        }
+        } catch (NumberFormatException ex) {
+        ex.printStackTrace();
+        taMyOutput.setText("Please enter a number for Age");
+        }
+        });
 
-        // // Remove Student button action
-        // btnRemoveStudent.setOnAction(e -> {
+        // Remove Student button action
+        btnRemoveStudent.setOnAction(e -> {
 
-        // if (tfDelStudent.getText().trim().equals("")) { // If text field is empty
-        // taMyOutput.setText("Please enter the Student Number you want to remove");
-        // } else {
-        // boolean status;
-        // status = sm.removeStudentFromList(tfDelStudent.getText());
-        // if (status == true) {
-        // taMyOutput.setText(tfDelStudent.getText() + " has been removed from the
-        // student list!");
-        // tfDelStudent.clear();
-        // } else {
-        // taMyOutput.setText("Student " + tfDelStudent.getText() + " not found\n");
-        // taMyOutput.appendText("No student removed!");
-        // tfDelStudent.clear();
-        // }
-        // }
+        if (tfDelStudent.getText().trim().equals("")) { // If text field is empty
+        taMyOutput.setText("Please enter the Student Number you want to remove");
+        } else {
+        boolean status;
+        status = sm.removeStudentFromList(tfDelStudent.getText());
+        if (status == true) {
+        taMyOutput.setText(tfDelStudent.getText() + " has been removed from the student list!");
+        tfDelStudent.clear();
+        } else {
+        taMyOutput.setText("Student " + tfDelStudent.getText() + " not found\n");
+        taMyOutput.appendText("No student removed!");
+        tfDelStudent.clear();
+        }
+        }
 
-        // });
+        });
 
         // Show total number of students
         btnShowTotal.setOnAction(e -> {

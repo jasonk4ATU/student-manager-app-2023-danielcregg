@@ -197,9 +197,9 @@ public class StudentManager implements Serializable {
 	public void readStudentDataFromCSVFilenio(String pathToStudentCSVFile) {
 		try (Stream<String> lines = Files.lines(Paths.get(pathToStudentCSVFile))) {
 			lines.skip(1) // Skip the header line
-				.map(line -> line.split(","))
-				.map(data -> new Student(data[0], data[1], Integer.parseInt(data[2])))
-				.forEach(this::addStudent);
+					.map(line -> line.split(","))
+					.map(data -> new Student(data[0], data[1], Integer.parseInt(data[2])))
+					.forEach(this::addStudent);
 		} catch (IOException e) {
 			System.err.println(
 					"ERROR: An error occurred while reading the student data from the file: " + e.getMessage());
